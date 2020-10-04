@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class PushBot2020
@@ -12,6 +13,7 @@ public class PushBot2020
     public DcMotor frontRight;
     public DcMotor backRight;
     public DcMotor backLeft;
+    public Servo Servo1;
 
 
     /* local OpMode members. */
@@ -28,6 +30,7 @@ public class PushBot2020
         frontRight = hwMap.get(DcMotor.class, "frontRight");
         backLeft  = hwMap.get(DcMotor.class, "backLeft");
         backRight = hwMap.get(DcMotor.class, "backRight");
+        Servo1 = hwMap.get(Servo.class, "Servo1");
 
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
         frontRight.setDirection(DcMotor.Direction.REVERSE);
