@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
-    <ObjectTarget name="ring" size="127 19"/>
+    <ImageTarget name="ring1" size="127.000000 169.333328" />
   </Tracking>
 </QCARConfig>
