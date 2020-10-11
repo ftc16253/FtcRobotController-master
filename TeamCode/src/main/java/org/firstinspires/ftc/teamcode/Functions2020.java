@@ -68,18 +68,18 @@ class Functions2020 {
 
         frontLeft.setTargetPosition(-rotationDistanceofWheel);
         frontRight.setTargetPosition(-rotationDistanceofWheel);
-/*
+
         if (distance > 0) {
             frontLeft.setPower(power);
-            frontRight.setPower(-power);
+            frontRight.setPower(power);
          }
         else if (distance < 0) {
-            frontLeft.setPower(-power);
+            frontLeft.setPower(power);
             frontRight.setPower(power);
         }
-*/
+
         frontLeft.setPower(power);
-        frontRight.setPower(-power);
+        frontRight.setPower(power);
 
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -98,6 +98,21 @@ class Functions2020 {
 
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+    }
+
+    public void DriveA(){
+
+        MoveForwardInch(56, 0.25);
+    }
+    public void DriveB(){
+      MoveForwardInch(79, 0.25);
+    }
+    public void DriveC(){
+      MoveForwardInch(97, 0.25);
+    }
+
+    public void CameraRings(){
 
     }
 }
