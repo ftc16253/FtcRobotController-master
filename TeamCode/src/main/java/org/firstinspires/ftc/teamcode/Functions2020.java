@@ -78,8 +78,8 @@ class Functions2020 {
             frontRight.setPower(power);
         }
 
-        frontLeft.setPower(power);
-        frontRight.setPower(power);
+        //frontLeft.setPower(power);
+        //frontRight.setPower(power);
 
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);

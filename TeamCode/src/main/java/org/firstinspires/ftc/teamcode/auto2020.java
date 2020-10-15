@@ -35,24 +35,26 @@ public class auto2020 extends LinearOpMode {
         while (opModeIsActive()) {
             telemetry.addData("Status", "Running");
             telemetry.update();
-/*
+
             robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             robot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
-            telemetry.addData("Motor Position: ", robot.frontLeft.getCurrentPosition());
-            telemetry.update();
-            sleep(1000);*/
+           telemetry.addData("Motor Position: ", robot.frontLeft.getCurrentPosition());
+           telemetry.update();
+           sleep(1000);
 
             //Forward
             robot.frontLeft.setTargetPosition(-541);
             robot.frontRight.setTargetPosition(-541);
 
-            robot.frontLeft.setPower(.25);
-            robot.frontRight.setPower(-.25);
-
             robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            robot.frontLeft.setPower(.25);
+            robot.frontRight.setPower(.25);
+            robot.backLeft.setPower(.25);
+            robot.backRight.setPower(.25);
 
 /*            //Backwards
             robot.frontLeft.setTargetPosition(541);
@@ -64,7 +66,8 @@ public class auto2020 extends LinearOpMode {
             robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);*/
 
-            while (robot.frontLeft.isBusy() && robot.frontRight.isBusy()) {
+            //while (robot.frontLeft.isBusy() && robot.frontRight.isBusy()) {
+            while (robot.frontLeft.isBusy()) {
                 telemetry.addData("Left Motor Position", robot.frontLeft.getCurrentPosition());
                 telemetry.addData("Right Motor Position", robot.frontRight.getCurrentPosition());
                 telemetry.update();
@@ -113,7 +116,7 @@ public class auto2020 extends LinearOpMode {
 */
             //Util.turnLeft(90, .40);
             //Util.MoveForwardInch(56, .5);
-            robot.frontLeft.setPower(.5);
+/*            robot.frontLeft.setPower(.5);
             robot.frontRight.setPower(-.5);
             robot.backRight.setPower(-.5);
             robot.backLeft.setPower(.5);
@@ -123,7 +126,7 @@ public class auto2020 extends LinearOpMode {
                 telemetry.addData("Right Motor Position at end", robot.frontRight.getCurrentPosition());
                 telemetry.update();
             }
-
+*/
             sleep(5000);
 
             //Util.MoveForwardInch(-15, .25);
