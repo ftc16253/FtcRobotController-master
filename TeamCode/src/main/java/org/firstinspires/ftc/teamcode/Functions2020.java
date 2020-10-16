@@ -72,10 +72,14 @@ class Functions2020 {
         if (distance > 0) {
             frontLeft.setPower(power);
             frontRight.setPower(power);
-         }
+            backRight.setPower(power);
+            backLeft.setPower(power);
+        }
         else if (distance < 0) {
             frontLeft.setPower(power);
             frontRight.setPower(power);
+            backRight.setPower(power);
+            backLeft.setPower(power);
         }
 
         //frontLeft.setPower(power);
