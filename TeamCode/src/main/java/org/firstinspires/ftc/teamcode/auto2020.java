@@ -45,26 +45,29 @@ public class auto2020 extends LinearOpMode {
            sleep(1000);
 
             //Forward
-            robot.frontLeft.setTargetPosition(-541);
+/*            robot.frontLeft.setTargetPosition(-541);
             robot.frontRight.setTargetPosition(-541);
 
             robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             robot.frontLeft.setPower(.25);
-            robot.frontRight.setPower(.25);
+            robot.frontRight.setPower(.30);
             robot.backLeft.setPower(.25);
-            robot.backRight.setPower(.25);
+            robot.backRight.setPower(.30);
+*/
 
-/*            //Backwards
-            robot.frontLeft.setTargetPosition(541);
+            //Backwards
+/*            robot.frontLeft.setTargetPosition(541);
             robot.frontRight.setTargetPosition(541);
 
-            robot.frontLeft.setPower(.25);
-            robot.frontRight.setPower(-.25);
+            robot.frontLeft.setPower(-.25);
+            robot.frontRight.setPower(-.30);
+            robot.backLeft.setPower(-.25);
+            robot.backRight.setPower(-.30);
 
             robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);*/
+            robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             //while (robot.frontLeft.isBusy() && robot.frontRight.isBusy()) {
             while (robot.frontLeft.isBusy()) {
@@ -73,10 +76,13 @@ public class auto2020 extends LinearOpMode {
                 telemetry.update();
             }
 
- /*           robot.frontLeft.setPower(0);
-            robot.frontRight.setPower(0);
+           robot.frontLeft.setPower(0);
+           robot.frontRight.setPower(0);
+           robot.backLeft.setPower(0);
+           robot.backRight.setPower(0);
+*/
 
-
+/*
        p=1;
             while (p != 0){
 
@@ -90,14 +96,19 @@ public class auto2020 extends LinearOpMode {
                 p += .1;
                 sleep(500);
             }
+*/
 
-
-            //Util.MoveForwardInch(20, .25);
+            //Util.MoveForwardInch(63, .25);  //Drive to A
+            //Util.MoveForwardInch(87, .25);  //Drive to B
+            //Util.MoveForwardInch(111, .25);  //Drive to C
+            Util.DriveB();
+            sleep(2000);
+            Util.MoveForwardInch(-15, .25);
             telemetry.addData("Left Motor Position at end", robot.frontLeft.getCurrentPosition());
             telemetry.addData("Right Motor Position at end", robot.frontRight.getCurrentPosition());
             telemetry.update();
 
-            //sleep(5000);
+            sleep(5000);
 
             //robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             //robot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -113,7 +124,7 @@ public class auto2020 extends LinearOpMode {
             //robot.frontRight.setPower(0);
            // robot.backLeft.setPower(0);
             //robot.backRight.setPower(0);
-*/
+
             //Util.turnLeft(90, .40);
             //Util.MoveForwardInch(56, .5);
 /*            robot.frontLeft.setPower(.5);
@@ -127,12 +138,13 @@ public class auto2020 extends LinearOpMode {
                 telemetry.update();
             }
 */
+
+/*            Util.MoveForwardInch(-15, .25);
+            telemetry.addData("Left Motor Position at end", robot.frontLeft.getCurrentPosition());
+            telemetry.addData("Right Motor Position at end", robot.frontRight.getCurrentPosition());
+            telemetry.update();
+*/
             sleep(5000);
-
-            //Util.MoveForwardInch(-15, .25);
-            //telemetry.addData("Left Motor Position at end", robot.frontLeft.getCurrentPosition());
-            //telemetry.update();
-
 
 
             break;

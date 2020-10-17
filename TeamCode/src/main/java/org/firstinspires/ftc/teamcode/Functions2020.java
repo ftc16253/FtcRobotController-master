@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 class Functions2020 {
     PushBot2020 rob = new PushBot2020();
@@ -69,27 +70,22 @@ class Functions2020 {
         frontLeft.setTargetPosition(-rotationDistanceofWheel);
         frontRight.setTargetPosition(-rotationDistanceofWheel);
 
-        if (distance > 0) {
-            frontLeft.setPower(power);
-            frontRight.setPower(power);
-            backRight.setPower(power);
-            backLeft.setPower(power);
-        }
-        else if (distance < 0) {
-            frontLeft.setPower(power);
-            frontRight.setPower(power);
-            backRight.setPower(power);
-            backLeft.setPower(power);
-        }
-
-        //frontLeft.setPower(power);
-        //frontRight.setPower(power);
-
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-
-
+        if (distance > 0) {
+            frontLeft.setPower(power);
+//            frontRight.setPower(power + .2);
+            frontRight.setPower(power + .3);
+            backRight.setPower(power);
+            backLeft.setPower(power + .3);
+        }
+        else if (distance < 0) {
+            frontLeft.setPower(-power);
+            frontRight.setPower(-power - .3);
+            backRight.setPower(-power);
+            backLeft.setPower(-power - .3);
+        }
 
         while (frontRight.isBusy() && frontLeft.isBusy()){ // || backLeft.isBusy() || backRight.isBusy()) {
 
@@ -106,14 +102,13 @@ class Functions2020 {
     }
 
     public void DriveA(){
-
-        MoveForwardInch(56, 0.25);
+        MoveForwardInch(63, 0.25);
     }
     public void DriveB(){
-      MoveForwardInch(79, 0.25);
+      MoveForwardInch(87, 0.25);
     }
     public void DriveC(){
-      MoveForwardInch(97, 0.25);
+      MoveForwardInch(111, 0.25);
     }
 
     public void CameraRings(){
