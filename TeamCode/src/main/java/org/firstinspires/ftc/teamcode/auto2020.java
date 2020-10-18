@@ -36,13 +36,10 @@ public class auto2020 extends LinearOpMode {
             telemetry.addData("Status", "Running");
             telemetry.update();
 
-            robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            robot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-
-           telemetry.addData("Motor Position: ", robot.frontLeft.getCurrentPosition());
-           telemetry.update();
+           //telemetry.addData("Motor Position: ", robot.frontLeft.getCurrentPosition());
+           //telemetry.update();
            sleep(1000);
+
 
             //Forward
 /*            robot.frontLeft.setTargetPosition(-541);
@@ -82,68 +79,27 @@ public class auto2020 extends LinearOpMode {
            robot.backRight.setPower(0);
 */
 
-/*
-       p=1;
-            while (p != 0){
 
-                robot.frontRight.setPower(p);
-                robot.frontLeft.setPower(p);
+            //Drive to A, which puts you on the line
+            //Util.DriveA();
 
-                if (p == .5){
-                robot.frontRight.setPower(.1);
-                robot.frontLeft.setPower(.1);
-                }
-                p += .1;
-                sleep(500);
-            }
-*/
 
-            //Util.MoveForwardInch(63, .25);  //Drive to A
-            //Util.MoveForwardInch(87, .25);  //Drive to B
-            //Util.MoveForwardInch(111, .25);  //Drive to C
+            //Drive to B, then back up onto the line
             Util.DriveB();
             sleep(2000);
-            Util.MoveForwardInch(-15, .25);
+            Util.MoveForwardInch(-20, .25);
+
+
+            //Drive to C
+            //Util.DriveC();
+            //sleep(2000);
+            //Util.MoveForwardInch(-44, .25);
+
+
             telemetry.addData("Left Motor Position at end", robot.frontLeft.getCurrentPosition());
             telemetry.addData("Right Motor Position at end", robot.frontRight.getCurrentPosition());
             telemetry.update();
 
-            sleep(5000);
-
-            //robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            //robot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-            //robot.frontLeft.setPower(-0.25);
-            //robot.frontRight.setPower(0.25);
-            //robot.backLeft.setPower(-0.25);
-            //robot.backRight.setPower(0.25);
-
-            //sleep(2500);
-
-            //robot.frontLeft.setPower(0);
-            //robot.frontRight.setPower(0);
-           // robot.backLeft.setPower(0);
-            //robot.backRight.setPower(0);
-
-            //Util.turnLeft(90, .40);
-            //Util.MoveForwardInch(56, .5);
-/*            robot.frontLeft.setPower(.5);
-            robot.frontRight.setPower(-.5);
-            robot.backRight.setPower(-.5);
-            robot.backLeft.setPower(.5);
-
-            while (robot.frontLeft.isBusy() && robot.frontRight.isBusy()) {
-                telemetry.addData("Left Motor Position at end", robot.frontLeft.getCurrentPosition());
-                telemetry.addData("Right Motor Position at end", robot.frontRight.getCurrentPosition());
-                telemetry.update();
-            }
-*/
-
-/*            Util.MoveForwardInch(-15, .25);
-            telemetry.addData("Left Motor Position at end", robot.frontLeft.getCurrentPosition());
-            telemetry.addData("Right Motor Position at end", robot.frontRight.getCurrentPosition());
-            telemetry.update();
-*/
             sleep(5000);
 
 
