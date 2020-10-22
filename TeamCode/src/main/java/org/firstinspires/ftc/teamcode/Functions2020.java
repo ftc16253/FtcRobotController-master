@@ -61,43 +61,44 @@ class Functions2020 {
         double totalRotations = distance/circumference;
         int rotationDistanceofWheel = (int)(andyMarkEncoderTics * totalRotations);
 
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        frontLeft.setTargetPosition(-rotationDistanceofWheel);
-        frontRight.setTargetPosition(-rotationDistanceofWheel);
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        if (distance > 0) {
-            frontLeft.setPower(power);
-//            frontRight.setPower(power + .2);
-            frontRight.setPower(power + .3);
-            backRight.setPower(power);
-            backLeft.setPower(power + .3);
+        while (true) {
+            if(Math.abs(frontRight.getCurrentPosition()) > Math.abs(rotationDistanceofWheel)) {
+                frontLeft.setPower(0);
+                backLeft.setPower(0);
+                frontRight.setPower(0);
+                backRight.setPower(0);
+                break;
+            }
+            else {
+                if (distance > 0) {
+                    frontLeft.setPower(-power);
+                    frontRight.setPower(-power);
+                    backRight.setPower(-power);
+                    backLeft.setPower(-power);
+                }
+                else if (distance < 0) {
+                    frontLeft.setPower(power);
+                    frontRight.setPower(power);
+                    backRight.setPower(power);
+                    backLeft.setPower(power);
+                }
+            }
         }
-        else if (distance < 0) {
-            frontLeft.setPower(-power);
-            frontRight.setPower(-power - .3);
-            backRight.setPower(-power);
-            backLeft.setPower(-power - .3);
-        }
-
-        while (frontRight.isBusy() && frontLeft.isBusy()){ // || backLeft.isBusy() || backRight.isBusy()) {
-
-        }
-
-        frontLeft.setPower(0);
-        backLeft.setPower(0);
-        frontRight.setPower(0);
-        backRight.setPower(0);
-
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 
@@ -106,7 +107,7 @@ class Functions2020 {
         //Let go of wobble grabber here
     }
     public void DriveB(){
-      MoveForwardInch(92, 0.25);
+      MoveForwardInch(92, 0.3);
     }
     public void DriveC(){
       MoveForwardInch(120, 0.25);
