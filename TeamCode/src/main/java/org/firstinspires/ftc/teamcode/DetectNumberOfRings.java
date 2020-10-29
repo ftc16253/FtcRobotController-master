@@ -102,21 +102,17 @@ public class DetectNumberOfRings extends LinearOpMode {
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
-        {
-            @Override
-            public void onOpened()
-            {
-
-                webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
-            }
-        });
-
+        RingPipeline detector = new RingPipeline(telemetry);
+        //webcam.setPipeline(detector);
+        webcam.openCameraDeviceAsync(
+                () -> webcam.startStreaming(320,240, OpenCvCameraRotation.UPRIGHT)
+        );
+        double ringValue;
 
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
-        initVuforia();
-        initTfod();
+        //initVuforia();
+        //initTfod();
 
        //webcam = hardwareMap.get(webcam.getClass(), "Webcam 1");
         /**
@@ -125,8 +121,8 @@ public class DetectNumberOfRings extends LinearOpMode {
          **/
 
 
-        if (tfod != null) {
-            tfod.activate();
+        //if (tfod != null) {
+        //    tfod.activate();
 
             // The TensorFlow software will scale the input images from the camera to a lower resolution.
             // This can result in lower detection accuracy at longer distances (> 55cm or 22").
@@ -137,7 +133,7 @@ public class DetectNumberOfRings extends LinearOpMode {
 
             // Uncomment the following line if you want to adjust the magnification and/or the aspect ratio of the input images.
             //tfod.setZoom(2.5, 1.78);
-        }
+        //}
 
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start op mode");
@@ -146,7 +142,8 @@ public class DetectNumberOfRings extends LinearOpMode {
 
         if (opModeIsActive()) {
             while (opModeIsActive()) {
-                if (tfod != null) {
+                ringValue = detector.getCenterValue();
+                /*if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
                     // the last time that call was made.
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
@@ -165,7 +162,7 @@ public class DetectNumberOfRings extends LinearOpMode {
                       }
                       telemetry.update();
                     }
-                }
+                }*/
             }
         }
 
