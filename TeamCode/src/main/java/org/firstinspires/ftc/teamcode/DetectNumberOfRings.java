@@ -39,6 +39,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.List;
 
@@ -55,13 +58,15 @@ import java.util.List;
 @TeleOp(name = "DetectNumberOfRings")
 //@Disabled
 public class DetectNumberOfRings extends LinearOpMode {
+
+
     private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
     private static final String LABEL_FIRST_ELEMENT = "Quad";
     private static final String LABEL_SECOND_ELEMENT = "Single";
     public String ObjectDetected = "None";
 
 
-    ConceptVuforiaNavigation webcam = new ConceptVuforiaNavigation();
+    //ConceptVuforiaNavigation webcam = new ConceptVuforiaNavigation();
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
      * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
@@ -89,20 +94,31 @@ public class DetectNumberOfRings extends LinearOpMode {
      */
     private TFObjectDetector tfod;
 
-
+    OpenCvCamera webcam;
 
     @Override
     public void runOpMode() {
+
+
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-        webcam = hardwareMap.get(webcam.getClass(), "Webcam 1");
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
+        {
+            @Override
+            public void onOpened()
+            {
+
+                webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+            }
+        });
+
 
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
         initVuforia();
         initTfod();
 
-        webcam = hardwareMap.get(webcam.getClass(), "Webcam 1");
+       //webcam = hardwareMap.get(webcam.getClass(), "Webcam 1");
         /**
          * Activate TensorFlow Object Detection before we wait for the start command.
          * Do it here so that the Camera Stream window will have the TensorFlow annotations visible.

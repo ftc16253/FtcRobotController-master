@@ -21,6 +21,11 @@ import java.security.cert.PolicyQualifierInfo;
 public class webcamexample extends LinearOpMode {
     OpenCvCamera webcam;
 
+    DetectNumberOfRings detect = new DetectNumberOfRings();
+    private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
+    private static final String LABEL_FIRST_ELEMENT = "Quad";
+    private static final String LABEL_SECOND_ELEMENT = "Single";
+    public String ObjectDetected = "None";
     //@Override
     public void runOpMode()
     {
@@ -228,4 +233,5 @@ public class webcamexample extends LinearOpMode {
             }
         }
     }
+
 }
