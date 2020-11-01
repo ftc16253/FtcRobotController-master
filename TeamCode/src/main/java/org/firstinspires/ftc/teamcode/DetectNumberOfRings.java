@@ -39,6 +39,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import org.opencv.core.Mat;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -102,12 +103,14 @@ public class DetectNumberOfRings extends LinearOpMode {
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        //AutoVisionPipeline detector = new AutoVisionPipeline();
         RingPipeline detector = new RingPipeline(telemetry);
         //webcam.setPipeline(detector);
         webcam.openCameraDeviceAsync(
                 () -> webcam.startStreaming(320,240, OpenCvCameraRotation.UPRIGHT)
         );
         double ringValue;
+        Mat ringInput = new Mat();
 
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
@@ -142,6 +145,7 @@ public class DetectNumberOfRings extends LinearOpMode {
 
         if (opModeIsActive()) {
             while (opModeIsActive()) {
+                //detector.processFrame(ringInput);
                 ringValue = detector.getCenterValue();
                 /*if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
