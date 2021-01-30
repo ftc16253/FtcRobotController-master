@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp
 
 public class Drive2020 extends LinearOpMode {
-    public DcMotor frontLeft, backLeft, frontRight, backRight;
+    public DcMotor frontLeft, backLeft, frontRight, backRight, intake, feeder;
     PushBot2020 robot = new PushBot2020();
 
     public void runOpMode() {
@@ -17,6 +17,8 @@ public class Drive2020 extends LinearOpMode {
         frontRight = robot.frontRight;
         backLeft = robot.backLeft;
         backRight = robot.backRight;
+        intake = robot.intake;
+        feeder = robot.feeder;
  /*        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
@@ -66,6 +68,14 @@ public class Drive2020 extends LinearOpMode {
             frontRight.setPower(turn);
             backLeft.setPower(-turn);
             backRight.setPower(turn);
+
+            if (gamepad1.right_bumper == true) {
+                intake.setPower(.5);
+                feeder.setPower(.5);
+            }else{
+                intake.setPower(0);
+                feeder.setPower(0);
+            }
 
         }
         //telemetry.addData("Current Right Motor Power", robot.frontRight.getPower());
