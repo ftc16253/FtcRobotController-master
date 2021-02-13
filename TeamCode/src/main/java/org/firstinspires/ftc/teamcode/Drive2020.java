@@ -70,8 +70,8 @@ public class Drive2020 extends LinearOpMode {
             backRight.setPower(turn);
 
             if (gamepad1.right_bumper == true) {
-                intake.setPower(.5);
-                feeder.setPower(.5);
+                intake.setPower(1);
+                feeder.setPower(1);
             }else{
                 intake.setPower(0);
                 feeder.setPower(0);

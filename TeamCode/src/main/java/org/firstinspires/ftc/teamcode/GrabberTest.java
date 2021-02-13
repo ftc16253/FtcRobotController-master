@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -9,9 +10,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class GrabberTest  extends LinearOpMode {
 
     public void runOpMode() {
-        Servo grabberLeft;
+        //Servo grabberLeft;
         Servo grabberRight;
-        grabberLeft = hardwareMap.get(Servo.class, "grabberLeft");
+        //grabberLeft = hardwareMap.get(Servo.class, "grabberLeft");
         grabberRight = hardwareMap.get(Servo.class, "grabberRight");
         //grabberLeft.setDirection(Servo.Direction.FORWARD);
         //grabberRight.setDirection(Servo.Direction.REVERSE);
@@ -40,6 +41,8 @@ public class GrabberTest  extends LinearOpMode {
                 //grabberLeft.setDirection(Servo.Direction.REVERSE);
                 //grabberRight.setDirection(Servo.Direction.FORWARD);
                 //grabberLeft.setPosition(.9);
+
+                //grabber claw needs to go to this position to close
                 grabberRight.setPosition(.35);
 
             }
