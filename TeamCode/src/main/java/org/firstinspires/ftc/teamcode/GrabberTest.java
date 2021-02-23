@@ -10,41 +10,62 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class GrabberTest  extends LinearOpMode {
 
     public void runOpMode() {
-        //Servo grabberLeft;
-        Servo grabberRight;
-        //grabberLeft = hardwareMap.get(Servo.class, "grabberLeft");
-        grabberRight = hardwareMap.get(Servo.class, "grabberRight");
+        Servo grabber;
+        Servo wobbleRotate;
+        grabber = hardwareMap.get(Servo.class, "grabber");
+        wobbleRotate = hardwareMap.get(Servo.class, "wobbleRotate");
         //grabberLeft.setDirection(Servo.Direction.FORWARD);
         //grabberRight.setDirection(Servo.Direction.REVERSE);
         //grabberLeft.setPosition(0);
-        grabberRight.setPosition(0);
+
+        //Start position for two servos
+        wobbleRotate.setPosition(0);
+
+        //Start position for claw
+        grabber.setPosition(.6);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            //Right trigger - grabber goes up
+            //Right trigger - wobble rotator goes down
             if (gamepad1.right_trigger != 0){
                 telemetry.addData("status","right trigger pressed");
                 telemetry.update();
                 //grabberLeft.setDirection(Servo.Direction.REVERSE);
                 //grabberRight.setDirection(Servo.Direction.REVERSE);
                 //grabberLeft.setPosition(.9);
-                grabberRight.setPosition(.6);
-
+                wobbleRotate.setPosition(.65);
             }
-            //Left trigger - grabber goes down
-            if (gamepad1.left_trigger != 0){
-                telemetry.addData("status","left trigger pressed");
+
+            //Left trigger - claw closes and wobble rotator goes up
+            if (gamepad1.left_trigger != 0) {
+                telemetry.addData("status", "left trigger pressed");
                 telemetry.update();
                 //grabberLeft.setDirection(Servo.Direction.REVERSE);
                 //grabberRight.setDirection(Servo.Direction.FORWARD);
                 //grabberLeft.setPosition(.9);
 
-                //grabber claw needs to go to this position to close
-                grabberRight.setPosition(.35);
+                //Close claw first
+                grabber.setPosition(0);
+                sleep(500);
+                //This is for the two servos
+                wobbleRotate.setPosition(.35);
+            }
 
+            //right bumper - wobble rotator goes down and claw opens
+            if (gamepad1.right_bumper == true){
+                //grabber claw needs to go to this position to close
+                //grabber.setPosition(0);
+                wobbleRotate.setPosition(.55);
+                sleep(1000);
+                grabber.setPosition(.6);
+            }
+
+            //left bumper - claw opens
+            if (gamepad1.left_bumper == true){
+                grabber.setPosition(.6);
             }
 
         }
