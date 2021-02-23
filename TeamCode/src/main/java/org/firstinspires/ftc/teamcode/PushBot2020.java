@@ -16,7 +16,7 @@ public class PushBot2020
     public DcMotor backRight;
     public DcMotor backLeft;
     public DcMotor intake, feeder;
-    public Servo Servo1;
+    public Servo grabber, wobbleRotate;
     public static final String VUFORIA_KEY =
             "Afctxlz/////AAABmSWf4jOsTUHcsOYa/JfaZlRo+3yiPN8cCUH4BDLpIZ8FAt0tEVLJ/mxWUyd7f0gqd+a7JRTMYP9+A9s1nojOs9B1ZGOFsvr84RZnbVN8cGP7RFKNP4Mg0Pr/6vIUmHGFx/jrOrXz/YJXwVXvPpqr1uDm8xpBZOE4j+CtQcKW2Y2zjVWHWRTkmb6ve/R91k3jfjaH4PErbZMcvD7Xy5IesqSet3/pjeUXWSnlHmPwH7fgUcHSkAf0Fj2nLvZ7zmpT8vh9rSKri9XD3A64WBNRO+6+SGH/C/eS3mWLmdi5ZMbSK66WuvNhAPT0SHCzzqAlAf2P6asrrrAuw+aQ0B2HV0mPtGdNPe62djhu5Afa/rL+";
 
@@ -37,7 +37,6 @@ public class PushBot2020
         backRight = hwMap.get(DcMotor.class, "backRight");
         intake = hwMap.get(DcMotor.class, "intake");
         feeder = hwMap.get(DcMotor.class, "feeder");
-        //Servo1 = hwMap.get(Servo.class, "Servo1");
 
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
         frontRight.setDirection(DcMotor.Direction.REVERSE);
@@ -52,6 +51,17 @@ public class PushBot2020
         backRight.setPower(0);
         intake.setPower(0);
         feeder.setPower(0);
+
+        //Define Servos
+        grabber = hwMap.get(Servo.class, "grabber");
+        wobbleRotate = hwMap.get(Servo.class, "wobbleRotate");
+
+        //Start position for two servos
+        wobbleRotate.setPosition(0);
+
+        //Start position for claw
+        grabber.setPosition(.6);
+
 /*
         //This section makes the motors drive slowly - Don't use BRAKE
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

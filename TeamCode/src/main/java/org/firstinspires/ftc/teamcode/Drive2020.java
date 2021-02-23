@@ -3,11 +3,14 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 
 public class Drive2020 extends LinearOpMode {
     public DcMotor frontLeft, backLeft, frontRight, backRight, intake, feeder;
+    public Servo grabber, wobbleRotate;
+
     PushBot2020 robot = new PushBot2020();
 
     public void runOpMode() {
@@ -19,6 +22,8 @@ public class Drive2020 extends LinearOpMode {
         backRight = robot.backRight;
         intake = robot.intake;
         feeder = robot.feeder;
+        grabber = robot.grabber;
+        wobbleRotate = robot.wobbleRotate;
  /*        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
@@ -75,6 +80,37 @@ public class Drive2020 extends LinearOpMode {
             }else{
                 intake.setPower(0);
                 feeder.setPower(0);
+            }
+
+            //Right trigger - wobble rotator goes down
+            if (gamepad1.right_trigger != 0){
+                telemetry.addData("status","right trigger pressed");
+                telemetry.update();
+                wobbleRotate.setPosition(.65);
+            }
+
+            //Left trigger - claw closes and wobble rotator goes up
+            if (gamepad1.left_trigger != 0) {
+                telemetry.addData("status", "left trigger pressed");
+                telemetry.update();
+
+                //Close claw first
+                grabber.setPosition(0);
+                sleep(500);
+                //This is for the two servos
+                wobbleRotate.setPosition(.35);
+            }
+
+            //left bumper - wobble rotator goes down and claw opens
+            if (gamepad1.left_bumper == true){
+                wobbleRotate.setPosition(.55);
+                sleep(1000);
+                grabber.setPosition(.6);
+            }
+
+            //Button A - wobble arm to initial position
+            if (gamepad1.a == true){
+                wobbleRotate.setPosition(0);
             }
 
         }

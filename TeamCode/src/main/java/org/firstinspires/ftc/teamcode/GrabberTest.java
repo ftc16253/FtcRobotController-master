@@ -33,19 +33,13 @@ public class GrabberTest  extends LinearOpMode {
             if (gamepad1.right_trigger != 0){
                 telemetry.addData("status","right trigger pressed");
                 telemetry.update();
-                //grabberLeft.setDirection(Servo.Direction.REVERSE);
-                //grabberRight.setDirection(Servo.Direction.REVERSE);
-                //grabberLeft.setPosition(.9);
-                wobbleRotate.setPosition(.65);
+                 wobbleRotate.setPosition(.65);
             }
 
             //Left trigger - claw closes and wobble rotator goes up
             if (gamepad1.left_trigger != 0) {
                 telemetry.addData("status", "left trigger pressed");
                 telemetry.update();
-                //grabberLeft.setDirection(Servo.Direction.REVERSE);
-                //grabberRight.setDirection(Servo.Direction.FORWARD);
-                //grabberLeft.setPosition(.9);
 
                 //Close claw first
                 grabber.setPosition(0);
@@ -56,8 +50,6 @@ public class GrabberTest  extends LinearOpMode {
 
             //right bumper - wobble rotator goes down and claw opens
             if (gamepad1.right_bumper == true){
-                //grabber claw needs to go to this position to close
-                //grabber.setPosition(0);
                 wobbleRotate.setPosition(.55);
                 sleep(1000);
                 grabber.setPosition(.6);
