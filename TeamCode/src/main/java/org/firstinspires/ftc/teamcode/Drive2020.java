@@ -25,7 +25,6 @@ public class Drive2020 extends LinearOpMode {
         grabber = robot.grabber;
         wobbleRotate = robot.wobbleRotate;
 
-        //test
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
