@@ -24,15 +24,6 @@ public class Drive2020 extends LinearOpMode {
         feeder = robot.feeder;
         grabber = robot.grabber;
         wobbleRotate = robot.wobbleRotate;
- /*        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        backRight = hardwareMap.get(DcMotor.class, "backRight");
-        frontLeft.setDirection(DcMotor.Direction.FORWARD);
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
-*/
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
