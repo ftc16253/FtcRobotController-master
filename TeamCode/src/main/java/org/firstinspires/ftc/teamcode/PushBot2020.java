@@ -1,12 +1,15 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 //import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import static java.lang.Thread.sleep;
 
 public class PushBot2020
 {
@@ -20,13 +23,12 @@ public class PushBot2020
     public static final String VUFORIA_KEY =
             "Afctxlz/////AAABmSWf4jOsTUHcsOYa/JfaZlRo+3yiPN8cCUH4BDLpIZ8FAt0tEVLJ/mxWUyd7f0gqd+a7JRTMYP9+A9s1nojOs9B1ZGOFsvr84RZnbVN8cGP7RFKNP4Mg0Pr/6vIUmHGFx/jrOrXz/YJXwVXvPpqr1uDm8xpBZOE4j+CtQcKW2Y2zjVWHWRTkmb6ve/R91k3jfjaH4PErbZMcvD7Xy5IesqSet3/pjeUXWSnlHmPwH7fgUcHSkAf0Fj2nLvZ7zmpT8vh9rSKri9XD3A64WBNRO+6+SGH/C/eS3mWLmdi5ZMbSK66WuvNhAPT0SHCzzqAlAf2P6asrrrAuw+aQ0B2HV0mPtGdNPe62djhu5Afa/rL+";
 
-
-    /* local OpMode members. */
+     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
 
     /* Initialize standard Hardware interfaces */
-    public void init(HardwareMap ahwMap) {
+    public void init(HardwareMap ahwMap, boolean isAuto) {
         // Save reference to Hardware map
         hwMap = ahwMap;
 
@@ -56,11 +58,21 @@ public class PushBot2020
         grabber = hwMap.get(Servo.class, "grabber");
         wobbleRotate = hwMap.get(Servo.class, "wobbleRotate");
 
-        //Start position for two servos
-        wobbleRotate.setPosition(0);
+        if (isAuto == false){
+            //Start position for two servos
+            wobbleRotate.setPosition(0);
 
-        //Start position for claw
-        grabber.setPosition(.6);
+            //Start position for claw
+            grabber.setPosition(.6);
+        }
+
+        else{
+            grabber.setPosition(0);
+            wobbleRotate.setPosition(.4);
+            wobbleRotate.setPosition(.2);
+            wobbleRotate.setPosition(0);
+        }
+
 
 /*
         //This section makes the motors drive slowly - Don't use BRAKE
@@ -70,5 +82,6 @@ public class PushBot2020
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 */
     }
+
 }
 

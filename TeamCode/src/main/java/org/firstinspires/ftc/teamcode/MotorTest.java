@@ -8,7 +8,7 @@ public class MotorTest extends LinearOpMode {
     PushBot2020 robot = new PushBot2020();
 
     public void runOpMode() {
-        robot.init(hardwareMap);
+        robot.init(hardwareMap,false);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();

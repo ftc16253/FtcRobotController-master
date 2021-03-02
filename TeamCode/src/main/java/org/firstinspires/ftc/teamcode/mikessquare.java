@@ -15,7 +15,7 @@ public class mikessquare extends LinearOpMode {
         telemetry.update();
 
 
-        rob.init(hardwareMap);
+        rob.init(hardwareMap,false);
         Util.init(hardwareMap);
 
 

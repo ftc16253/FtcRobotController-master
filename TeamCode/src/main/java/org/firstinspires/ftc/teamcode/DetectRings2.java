@@ -42,7 +42,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.List;
 
 @TeleOp(name = "DetectRings2")
-//@Disabled
+@Disabled
 public class DetectRings2 extends LinearOpMode {
     private OpenCvCamera webcam;
     private SkystoneDetector detector = new SkystoneDetector();

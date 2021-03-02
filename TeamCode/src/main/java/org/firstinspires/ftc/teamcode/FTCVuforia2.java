@@ -40,7 +40,7 @@ public class FTCVuforia2 extends LinearOpMode {
     public void runOpMode()
     {
         //TFObjectDetector tfod = new TFObjectDetector();
-        rob.init(hardwareMap);
+        rob.init(hardwareMap,false);
         Util.init(hardwareMap);
 
         telemetry.addData("Status", "Initialized" );

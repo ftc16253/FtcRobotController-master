@@ -18,7 +18,7 @@ public class mikedrive extends LinearOpMode {
         telemetry.update();
 
 
-        robot.init(hardwareMap);
+        robot.init(hardwareMap,false);
         Util.init(hardwareMap);
 
 

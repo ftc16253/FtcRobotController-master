@@ -14,7 +14,7 @@ public class Drive2020 extends LinearOpMode {
     PushBot2020 robot = new PushBot2020();
 
     public void runOpMode() {
-       robot.init(hardwareMap);
+       robot.init(hardwareMap, false);
 
         frontLeft = robot.frontLeft;
         frontRight = robot.frontRight;

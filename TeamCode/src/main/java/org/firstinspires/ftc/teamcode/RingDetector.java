@@ -30,8 +30,8 @@ public class RingDetector extends OpenCvPipeline {
         Mat matBottom = workingMatrix.submat(120,130,10, 50);
         Mat matTop = workingMatrix.submat(100, 110, 10, 50);
 
-        Imgproc.rectangle(workingMatrix, new Rect(10,120, 40, 10), new Scalar(0,255,0));
-        Imgproc.rectangle(workingMatrix, new Rect(10,100, 40, 10), new Scalar(0,255,0));
+        Imgproc.rectangle(workingMatrix, new Rect(120,120, 40, 10), new Scalar(0,255,0));
+        Imgproc.rectangle(workingMatrix, new Rect(120,100, 40, 10), new Scalar(0,255,0));
 
         bottomTotal = Core.sumElems(matBottom).val[2];
         topTotal = Core.sumElems(matTop).val[2];

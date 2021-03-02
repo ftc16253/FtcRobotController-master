@@ -24,7 +24,7 @@ public class autoRings2020 extends LinearOpMode {
 
     //@Override
     public void runOpMode(){
-        robot.init(hardwareMap);
+        robot.init(hardwareMap,true);
         util.init(hardwareMap);
         initVuforia();
         initTfod();

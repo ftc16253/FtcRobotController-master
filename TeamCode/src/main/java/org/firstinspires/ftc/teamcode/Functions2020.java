@@ -11,9 +11,10 @@ class Functions2020 {
     double diameter = 4;
     double circumference = diameter * 3.14;
     int tetrixEncoderTics = 1440;
-    int andyMarkEncoderTics = 515;
+    //int andyMarkEncoderTics = 515;
+    int andyMarkEncoderTics = 660;
     public void init(HardwareMap ahwMap) {
-        rob.init(ahwMap);
+        rob.init(ahwMap, false);
 
         frontLeft = rob.frontLeft;
         frontRight = rob.frontRight;
@@ -103,7 +104,7 @@ class Functions2020 {
     }
 
     public void DriveA(){
-        MoveForwardInch(72, 0.3);
+        MoveForwardInch(72, 0.5);
         //Let go of wobble grabber here
     }
     public void DriveB(){

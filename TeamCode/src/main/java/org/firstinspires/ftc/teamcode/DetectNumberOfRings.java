@@ -57,7 +57,7 @@ import java.util.List;
  * is explained below.
  */
 @TeleOp(name = "DetectNumberOfRings")
-//@Disabled
+@Disabled
 public class DetectNumberOfRings extends LinearOpMode {
 
 

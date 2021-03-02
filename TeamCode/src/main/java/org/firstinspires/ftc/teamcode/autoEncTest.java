@@ -21,7 +21,7 @@ public class autoEncTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         //Initialize motors
-        robot.init(hardwareMap);
+        robot.init(hardwareMap,true);
         Util.init(hardwareMap);
         runtime.reset();
         int rotationDistanceofWheel = 3772;
