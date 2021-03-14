@@ -36,7 +36,7 @@ public class RingDetector extends OpenCvPipeline {
         bottomTotal = Core.sumElems(matBottom).val[2];
         topTotal = Core.sumElems(matTop).val[2];
 
-        if (bottomTotal < 30000){
+        if (bottomTotal < 45000){
             if (topTotal < 30000) {
                 numberOfRings = "QUAD";
             }else {

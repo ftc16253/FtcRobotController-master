@@ -71,18 +71,31 @@ public class auto2020 extends LinearOpMode {
             if (numberOfRings == "NONE"){
                 //Drive to A, which puts you on the line
                 Util.DriveA();
-            }
+                sleep(250);
+                Util.turnLeft(20,.5);
+                sleep(750);
+                robot.wobbleRotate.setPosition(.65);
+                sleep(1250);
+                robot.grabber.setPosition(.6);
+                sleep(750);
+                Util.MoveForwardInch(6, .5);
+                sleep(500);
+                Util.turnRight(30, .5);
+                sleep(750);
+                Util.MoveForwardInch(-66, .5);
+                sleep(250);
+                Util.MoveForwardInch(-7, .5);
+                /*Util.turnLeft(30,.5);
+                sleep(250);
+                Util.MoveForwardInch(-10 ,.5);
+                sleep(250);*/
+                robot.grabber.setPosition(0);
 
-            else if (numberOfRings == "SINGLE"){
-                //Drive to B, then back up onto the line
-                Util.DriveB();
-                sleep(2000);
-                Util.MoveForwardInch(-20, .25);
             }
 
             else{
                 //Drive to C
-                Util.DriveC();
+                Util.DriveB();
                 sleep(2000);
                 Util.MoveForwardInch(-44, .25);
             }
