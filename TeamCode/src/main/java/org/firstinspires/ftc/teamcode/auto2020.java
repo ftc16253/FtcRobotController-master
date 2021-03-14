@@ -80,38 +80,22 @@ public class auto2020 extends LinearOpMode {
                 sleep(750);
                 Util.MoveForwardInch(6, .5);
                 sleep(500);
-                Util.turnRight(35, .5);
+                Util.turnRight(30, .5);
                 sleep(750);
-                Util.MoveForwardInch(-65, .5);
-                sleep(500);
-                Util.turnLeft(25,.5);
+                Util.MoveForwardInch(-66, .5);
                 sleep(250);
-                Util.MoveForwardInch(-2,.5);
+                Util.MoveForwardInch(-7, .5);
+                /*Util.turnLeft(30,.5);
                 sleep(250);
+                Util.MoveForwardInch(-10 ,.5);
+                sleep(250);*/
                 robot.grabber.setPosition(0);
-                /*Util.turnLeft(5, .5);
-                sleep(500);
-                Util.MoveForwardInch(-30, .5);*/
 
-            }
-
-            else if (numberOfRings == "SINGLE"){
-                Util.DriveA();
-                sleep(750);
-                Util.turnRight(90, .5);
-                sleep(500);
-                robot.wobbleRotate.setPosition(.65);
-                sleep(1000);
-                robot.grabber.setPosition(.6);
-                sleep(750);
-                Util.MoveForwardInch(6, .5);
-                sleep(500);
-                Util.turnRight(35, .5);
             }
 
             else{
                 //Drive to C
-                Util.DriveC();
+                Util.DriveB();
                 sleep(2000);
                 Util.MoveForwardInch(-44, .25);
             }

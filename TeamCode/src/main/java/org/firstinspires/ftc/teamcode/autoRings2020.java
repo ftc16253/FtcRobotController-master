@@ -61,7 +61,7 @@ public class autoRings2020 extends LinearOpMode {
             telemetry.update();
             sleep(3000);
             if (ObjectDetected == "Quad") {
-                util.DriveC();
+                util.DriveB();
             } else if (ObjectDetected == "Single") {
                 util.DriveB();
             } else if (ObjectDetected == "None") {

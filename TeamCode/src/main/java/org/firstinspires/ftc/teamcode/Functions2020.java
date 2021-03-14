@@ -145,14 +145,12 @@ class Functions2020 {
     }
 
     public void DriveA(){
-        MoveForwardInch(90, 0.5);
+        MoveForwardInch(93, .5);
+        //MoveForwardInch(-60, 0.5);
         //Let go of wobble grabber here
     }
     public void DriveB(){
-      MoveForwardInch(92, 0.3);
-    }
-    public void DriveC(){
-      MoveForwardInch(120, 0.3);
+      MoveForwardInch(-92, 0.3);
     }
 
     public void CameraRings(){
