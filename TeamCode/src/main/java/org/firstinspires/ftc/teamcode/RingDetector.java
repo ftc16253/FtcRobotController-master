@@ -27,8 +27,10 @@ public class RingDetector extends OpenCvPipeline {
         Imgproc.rectangle(workingMatrix, new Rect(80,120, 80, 120), new Scalar(0,255,0));
         totalRings = Core.sumElems(matCenter).val[2];*/
 
-        Mat matBottom = workingMatrix.submat(120,130,10, 50);
-        Mat matTop = workingMatrix.submat(100, 110, 10, 50);
+        //Mat matBottom = workingMatrix.submat(120,130,10, 50);
+        //Mat matTop = workingMatrix.submat(100, 110, 10, 50);
+        Mat matBottom = workingMatrix.submat(120,130,120, 160);
+        Mat matTop = workingMatrix.submat(100, 110, 120, 160);
 
         Imgproc.rectangle(workingMatrix, new Rect(120,120, 40, 10), new Scalar(0,255,0));
         Imgproc.rectangle(workingMatrix, new Rect(120,100, 40, 10), new Scalar(0,255,0));
@@ -36,7 +38,7 @@ public class RingDetector extends OpenCvPipeline {
         bottomTotal = Core.sumElems(matBottom).val[2];
         topTotal = Core.sumElems(matTop).val[2];
 
-        if (bottomTotal < 45000){
+        if (bottomTotal < 35000){
             if (topTotal < 30000) {
                 numberOfRings = "QUAD";
             }else {

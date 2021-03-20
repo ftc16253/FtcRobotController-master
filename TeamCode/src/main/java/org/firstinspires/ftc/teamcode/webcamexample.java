@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import android.graphics.Point;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -18,6 +19,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import java.security.cert.PolicyQualifierInfo;
 
 @TeleOp
+@Disabled
 public class webcamexample extends LinearOpMode {
     OpenCvCamera webcam;
 

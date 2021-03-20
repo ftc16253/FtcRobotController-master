@@ -13,6 +13,7 @@ class Functions2020 {
     int tetrixEncoderTics = 1440;
     //int andyMarkEncoderTics = 515;
     int andyMarkEncoderTics = 660;
+
     public void init(HardwareMap ahwMap) {
         rob.init(ahwMap, false);
 
@@ -22,7 +23,7 @@ class Functions2020 {
         backRight = rob.backRight;
     }
 
-    public void turnLeft (double degrees, double power){
+    public void turnLeft(double degrees, double power) {
 
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -30,8 +31,8 @@ class Functions2020 {
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        frontLeft.setTargetPosition((int) (-andyMarkEncoderTics/360 * degrees));
-        frontRight.setTargetPosition((int) (-andyMarkEncoderTics/360 * degrees));
+        frontLeft.setTargetPosition((int) (-andyMarkEncoderTics / 360 * degrees));
+        frontRight.setTargetPosition((int) (-andyMarkEncoderTics / 360 * degrees));
 
 
         //frontRight.setTargetPosition(520);
@@ -45,7 +46,7 @@ class Functions2020 {
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        while (frontRight.isBusy() && frontLeft.isBusy()){ // || backLeft.isBusy() || backRight.isBusy()) {
+        while (frontRight.isBusy() && frontLeft.isBusy()) { // || backLeft.isBusy() || backRight.isBusy()) {
 
         }
 
@@ -55,10 +56,9 @@ class Functions2020 {
         backLeft.setPower(0);
 
 
-
     }
 
-    public void turnRight (double degrees, double power){
+    public void turnRight(double degrees, double power) {
 
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -66,8 +66,8 @@ class Functions2020 {
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        frontLeft.setTargetPosition((int) (-andyMarkEncoderTics/360 * degrees));
-        frontRight.setTargetPosition((int) (-andyMarkEncoderTics/360 * degrees));
+        frontLeft.setTargetPosition((int) (-andyMarkEncoderTics / 360 * degrees));
+        frontRight.setTargetPosition((int) (-andyMarkEncoderTics / 360 * degrees));
 
 
         //frontRight.setTargetPosition(520);
@@ -76,12 +76,12 @@ class Functions2020 {
         frontLeft.setPower(-power);
         frontRight.setPower(power);
         backLeft.setPower(-power);
-        backRight.setPower(power);
+        backRight.setPower(-power);
 
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        while (frontRight.isBusy() && frontLeft.isBusy()){ // || backLeft.isBusy() || backRight.isBusy()) {
+        while (frontRight.isBusy() && frontLeft.isBusy()) { // || backLeft.isBusy() || backRight.isBusy()) {
 
         }
 
@@ -91,13 +91,12 @@ class Functions2020 {
         backLeft.setPower(0);
 
 
-
     }
 
     public void MoveForwardInch(double distance, double power) {
 
-        double totalRotations = distance/circumference;
-        int rotationDistanceofWheel = (int)(andyMarkEncoderTics * totalRotations);
+        double totalRotations = distance / circumference;
+        int rotationDistanceofWheel = (int) (andyMarkEncoderTics * totalRotations);
 
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -108,27 +107,25 @@ class Functions2020 {
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         while (true) {
-            if(Math.abs(frontRight.getCurrentPosition()) > Math.abs(rotationDistanceofWheel)) {
+            if (Math.abs(frontRight.getCurrentPosition()) > Math.abs(rotationDistanceofWheel)) {
                 frontLeft.setPower(0);
                 backLeft.setPower(0);
                 frontRight.setPower(0);
                 backRight.setPower(0);
                 break;
-            }
-            else {
+            } else {
                 if (distance > 0) {
                     //frontLeft.setPower(-power - .05);
                     frontLeft.setPower(-power);
-                    frontRight.setPower(-power);
-                    backRight.setPower(-power);
+                    frontRight.setPower(-power + .065);
+                    backRight.setPower(-power + .065);
                     //backLeft.setPower(-power - .05);
                     backLeft.setPower(-power);
-                }
-                else if (distance < 0) {
+                } else if (distance < 0) {
                     //frontLeft.setPower(power + .05);
                     frontLeft.setPower(power);
-                    frontRight.setPower(power);
-                    backRight.setPower(power);
+                    frontRight.setPower(power - .065);
+                    backRight.setPower(power - .065);
                     //backLeft.setPower(power + .05);
                     backLeft.setPower(power);
                 }
@@ -144,17 +141,46 @@ class Functions2020 {
 
     }
 
-    public void DriveA(){
-        MoveForwardInch(93, .5);
+    public void DriveA() {
+        //MoveForwardInch(93, .5);
+        MoveForwardInch(60, .5);
         //MoveForwardInch(-60, 0.5);
         //Let go of wobble grabber here
     }
-    public void DriveB(){
-      MoveForwardInch(-92, 0.3);
+
+    public void DriveB() {
+        MoveForwardInch(-92, 0.3);
     }
 
-    public void CameraRings(){
+    public void CameraRings() {
 
+    }
+
+    public void PIDloopDrive(double distance, double power) {
+        if (frontLeft.getCurrentPosition() != distance) {
+            while (frontRight.getCurrentPosition() != distance) {
+                if (frontRight.getCurrentPosition() - 3 > frontLeft.getCurrentPosition()) {
+                    while (frontRight.getCurrentPosition() != frontLeft.getCurrentPosition()) {
+                        frontRight.setPower(power - .05);
+                        frontLeft.setPower(power);
+                        backRight.setPower(power - .05);
+                        backLeft.setPower(power);
+                    }
+                } else if (frontRight.getCurrentPosition() + 3 < frontLeft.getCurrentPosition()) {
+                    while (frontRight.getCurrentPosition() != frontLeft.getCurrentPosition()) {
+                        frontRight.setPower(power);
+                        frontLeft.setPower(power - .05);
+                        backRight.setPower(power);
+                        backLeft.setPower(power - .05);
+                    }
+                } else {
+                    frontRight.setPower(power);
+                    frontLeft.setPower(power);
+                    backRight.setPower(power);
+                    backLeft.setPower(power);
+                }
+            }
+        }
     }
 }
 

@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name="mikedrive", group="LinearOpMode")
-
+@Disabled
 public class mikedrive extends LinearOpMode {
 
     DcMotor frontLeft, frontRigth, backLeft, backRight;

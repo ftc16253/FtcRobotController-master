@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp
 
 public class Drive2020 extends LinearOpMode {
-    public DcMotor frontLeft, backLeft, frontRight, backRight, intake, feeder;
+    public DcMotor frontLeft, backLeft, frontRight, backRight, intake, feeder, shooterFront, shooterBack;
     public Servo grabber, wobbleRotate;
 
     PushBot2020 robot = new PushBot2020();
@@ -24,6 +24,8 @@ public class Drive2020 extends LinearOpMode {
         feeder = robot.feeder;
         grabber = robot.grabber;
         wobbleRotate = robot.wobbleRotate;
+        shooterFront = robot.shooterFront;
+        shooterBack = robot.shooterBack;
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -102,6 +104,16 @@ public class Drive2020 extends LinearOpMode {
             //Button A - wobble arm to initial position
             if (gamepad1.a == true){
                 wobbleRotate.setPosition(0);
+            }
+
+            //Button X - turns on the shooter motors
+            if (gamepad1.x == true){
+                shooterFront.setPower(1);
+                shooterBack.setPower(1);
+            }
+            else {
+                shooterFront.setPower(0);
+                shooterBack.setPower(0);
             }
 
         }

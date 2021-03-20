@@ -42,15 +42,16 @@ public class autoEncTest extends LinearOpMode {
            //telemetry.update();
            sleep(1000);
 
-           robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-           robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
            robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
            robot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
            robot.frontLeft.setPower(power);
            robot.frontRight.setPower(power);
            robot.backRight.setPower(power);
            robot.backLeft.setPower(power);
            while (Math.abs(robot.frontLeft.getCurrentPosition()) < Math.abs(rotationDistanceofWheel) || Math.abs(robot.frontRight.getCurrentPosition()) < Math.abs(rotationDistanceofWheel)) {
+               telemetry.addData("rotationDistance: ", rotationDistanceofWheel);
                telemetry.addData("Motor Position: ", robot.frontLeft.getCurrentPosition());
                telemetry.update();
            }

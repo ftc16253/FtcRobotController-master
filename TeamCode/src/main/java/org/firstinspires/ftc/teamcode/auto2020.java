@@ -70,9 +70,18 @@ public class auto2020 extends LinearOpMode {
 
             if (numberOfRings == "NONE"){
                 //Drive to A, which puts you on the line
-                Util.DriveA();
+                telemetry.addData("Right Position: " ,robot.frontRight.getCurrentPosition());
+                telemetry.addData("Left Position: ", robot.frontLeft.getCurrentPosition());
+                telemetry.update();
+
+               // Util.MoveForwardInch(76, .5);
+                Util.PIDloopDrive(76, -.5);
                 sleep(250);
-                Util.turnLeft(20,.5);
+                telemetry.addData("Right Position: " ,robot.frontRight.getCurrentPosition());
+                telemetry.addData("Left Position: ", robot.frontLeft.getCurrentPosition());
+                telemetry.update();
+
+               /* Util.turnLeft(60,.5);
                 sleep(750);
                 robot.wobbleRotate.setPosition(.65);
                 sleep(1250);
@@ -85,17 +94,19 @@ public class auto2020 extends LinearOpMode {
                 Util.MoveForwardInch(-66, .5);
                 sleep(250);
                 Util.MoveForwardInch(-7, .5);
-                /*Util.turnLeft(30,.5);
-                sleep(250);
-                Util.MoveForwardInch(-10 ,.5);
-                sleep(250);*/
                 robot.grabber.setPosition(0);
 
+
+ */
+            }
+            else if (numberOfRings == "SINGLE"){
+                //Drive to B
+                Util.MoveForwardInch(60, .5);
             }
 
-            else{
+            else {
                 //Drive to C
-                Util.DriveB();
+                Util.MoveForwardInch(60, .5);
                 sleep(2000);
                 Util.MoveForwardInch(-44, .25);
             }

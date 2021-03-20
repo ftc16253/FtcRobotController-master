@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @TeleOp
+@Disabled
 public class camera_test_mouse extends LinearOpMode{
 
         public static final String TAG = "Vuforia Navigation Sample";

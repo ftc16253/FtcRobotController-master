@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous(name="miketurn", group="Linear Opmode")
+@Disabled
 public class miketurn extends LinearOpMode {
     public DcMotor frontLeft, frontRight, backLeft, backRight;
             PushBot2020 rob = new PushBot2020();
