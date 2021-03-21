@@ -3,9 +3,29 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 class Functions2020 {
     PushBot2020 rob = new PushBot2020();
+
+    private double kP = 9000000.0;
+    private double kI = 0.0;
+    private double kD = 10000.0;
+
+    private double integral = 0.0;
+    private double derivative = 0.0;
+
+    private double motorOut = 0.0;
+    private final double fTarget = 3.0e-6;  //1.2e-6      2.5e-6
+    private double fVelocity = 0.0;
+    private double fError = 0.0;
+    private double fLastError = 0.0;
+
+    private int fEncoder = 0;
+    private int fLastEncoder = 0;
+
+    private long fVelocityTime = 0;
+    private long fLastVelocityTime = 0;
 
     public DcMotor frontLeft, frontRight, backLeft, backRight;
     double diameter = 4;
@@ -25,35 +45,36 @@ class Functions2020 {
 
     public void turnLeft(double degrees, double power) {
 
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        frontLeft.setTargetPosition((int) (-andyMarkEncoderTics / 360 * degrees));
+        double turnCircumference = 15 * 3.14;
+        double totalRotations = turnCircumference / 360 * degrees;
+        int rotationDistanceofWheel = (int) (andyMarkEncoderTics * totalRotations);
+
+        /*frontLeft.setTargetPosition((int) (andyMarkEncoderTics / 360 * degrees));
         frontRight.setTargetPosition((int) (-andyMarkEncoderTics / 360 * degrees));
+*/
 
 
-        //frontRight.setTargetPosition(520);
-        //frontLeft.setTargetPosition(520);
-
-        frontLeft.setPower(power);
-        frontRight.setPower(-power);
-        backLeft.setPower(power);
-        backRight.setPower(-power);
-
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        while (frontRight.isBusy() && frontLeft.isBusy()) { // || backLeft.isBusy() || backRight.isBusy()) {
-
+        boolean runRobot = true;
+        while (runRobot) {
+            if (Math.abs(frontRight.getCurrentPosition()) > Math.abs(rotationDistanceofWheel)) {
+                frontLeft.setPower(0);
+                backLeft.setPower(0);
+                frontRight.setPower(0);
+                backRight.setPower(0);
+                runRobot = false;
+            } else {
+                frontLeft.setPower(power);
+                frontRight.setPower(-power);
+                backLeft.setPower(power);
+                backRight.setPower(-power);
+            }
         }
-
-        frontLeft.setPower(0);
-        frontRight.setPower(0);
-        backRight.setPower(0);
-        backLeft.setPower(0);
 
 
     }
@@ -182,5 +203,68 @@ class Functions2020 {
             }
         }
     }
+
+    public void PIDloopDrive2(double distance, double power) {
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        double totalRotations = distance / circumference;
+        int TicDistance = (int) (andyMarkEncoderTics * totalRotations);
+
+
+        while (Math.abs(frontRight.getCurrentPosition()) < TicDistance) {
+            frontRight.setPower(power);
+            frontLeft.setPower(power-0.05);
+            backRight.setPower(power);
+            backLeft.setPower(power-0.05);
+        }
+
+        frontRight.setPower(0);
+        frontLeft.setPower(0);
+        backRight.setPower(0);
+        backLeft.setPower(0);
+
+    }
+    public void calculatePID(double shooter_power) {
+        fVelocityTime = System.nanoTime();
+        fEncoder = rob.shooterFront.getCurrentPosition();
+        fVelocity = (double) (fEncoder - fLastEncoder) / (fVelocityTime - fLastVelocityTime);
+        fError = fTarget - fVelocity;
+
+        integral += fError;
+        if (fError == 0) {
+            integral = 0;
+        }
+
+        if (Math.abs(fError) > 50) {
+            integral = 0;
+        }
+
+        derivative = fError - fLastError;
+
+        fLastError = fError;
+        fLastEncoder = fEncoder;
+        fLastVelocityTime = fVelocityTime;
+
+        motorOut = (kP * fError) + (kI * integral) + (kD * derivative);
+
+        motorOut = Range.clip(motorOut, 0.0, shooter_power);
+
+        //Log.wtf(TAG, String.valueOf(fError));
+
+        setFPower(motorOut);
+    }
+
+    private void setFPower(double power) {
+        rob.shooterFront.setPower(power);
+    }
+
 }
 

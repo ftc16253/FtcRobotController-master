@@ -39,7 +39,7 @@ public class auto2020 extends LinearOpMode {
 
         webcam.openCameraDevice();
         webcam.setPipeline(detector);
-        webcam.startStreaming(320,240, OpenCvCameraRotation.UPRIGHT);
+        webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
         robot.grabber.setPosition(0);
 
         telemetry.addData("Status", "Initialized");
@@ -47,6 +47,8 @@ public class auto2020 extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+
+
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
@@ -65,7 +67,7 @@ public class auto2020 extends LinearOpMode {
 
                 t=t+1;
             }
-            numberOfRings = "NONE";
+            //numberOfRings = "NONE";
 
 
             if (numberOfRings == "NONE"){
@@ -74,34 +76,72 @@ public class auto2020 extends LinearOpMode {
                 telemetry.addData("Left Position: ", robot.frontLeft.getCurrentPosition());
                 telemetry.update();
 
-               // Util.MoveForwardInch(76, .5);
-                Util.PIDloopDrive(76, -.5);
-                sleep(250);
+                //Util.turnLeft(5,.7);
+                Util.PIDloopDrive2(36, -.6);
+                sleep(500);
                 telemetry.addData("Right Position: " ,robot.frontRight.getCurrentPosition());
                 telemetry.addData("Left Position: ", robot.frontLeft.getCurrentPosition());
                 telemetry.update();
 
-               /* Util.turnLeft(60,.5);
+                Util.turnLeft(1,.7);
+                sleep(250);
+
+                break;
+                /*
+                Util.calculatePID(1.0);
+                sleep(500);
+                robot.feeder.setPower(1);
+                sleep(1500);
+                robot.feeder.setPower(0);
+                sleep(250);
+                Util.calculatePID(0);
+                sleep(100);
+                /*
+                Util.turnLeft(75,.5);
                 sleep(750);
                 robot.wobbleRotate.setPosition(.65);
                 sleep(1250);
                 robot.grabber.setPosition(.6);
                 sleep(750);
-                Util.MoveForwardInch(6, .5);
+                Util.PIDloopDrive2(3,.7);
+                sleep(250);
+                Util.turnRight(90,.7);
                 sleep(500);
-                Util.turnRight(30, .5);
+                Util.PIDloopDrive2(15,.7);
+                sleep(250);
+                robot.wobbleRotate.setPosition(0);
+                sleep(25000);*/
+            }
+
+            else if (numberOfRings == "SINGLE"){
+                //Drive to B
+                telemetry.addData("Right Position: " ,robot.frontRight.getCurrentPosition());
+                telemetry.addData("Left Position: ", robot.frontLeft.getCurrentPosition());
+                telemetry.update();
+
+                Util.PIDloopDrive2(75, .7);
+                sleep(250);
+                telemetry.addData("Right Position: " ,robot.frontRight.getCurrentPosition());
+                telemetry.addData("Left Position: ", robot.frontLeft.getCurrentPosition());
+                telemetry.update();
+
+                Util.turnRight(90,.7);
+                sleep(500);
+                robot.wobbleRotate.setPosition(.65);
+                sleep(1250);
+                robot.grabber.setPosition(.6);
                 sleep(750);
-                Util.MoveForwardInch(-66, .5);
+                Util.PIDloopDrive2(6, .7);
+                sleep(500);
+                Util.turnLeft(30, .5);
+                sleep(750);
+                Util.PIDloopDrive2(-66, .5);
                 sleep(250);
                 Util.MoveForwardInch(-7, .5);
                 robot.grabber.setPosition(0);
 
 
- */
-            }
-            else if (numberOfRings == "SINGLE"){
-                //Drive to B
-                Util.MoveForwardInch(60, .5);
+
             }
 
             else {
@@ -118,9 +158,6 @@ public class auto2020 extends LinearOpMode {
             telemetry.update();
 
             sleep(5000);
-
-
-            break;
 
 
         }
