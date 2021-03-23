@@ -65,7 +65,7 @@ public class autoRings2020 extends LinearOpMode {
             } else if (ObjectDetected == "Single") {
                 util.DriveB();
             } else if (ObjectDetected == "None") {
-                util.DriveA();
+                //util.DriveA();
             }
         }
     }

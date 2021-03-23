@@ -10,6 +10,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
+import com.qualcomm.hardware.bosch.BNO055IMU;
 
 @Autonomous(name="auto2020", group="Linear Opmode")
 
@@ -37,6 +38,7 @@ public class auto2020 extends LinearOpMode {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
 
+        BNO055IMU imu;
         webcam.openCameraDevice();
         webcam.setPipeline(detector);
         webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
@@ -68,96 +70,104 @@ public class auto2020 extends LinearOpMode {
                 t=t+1;
             }
             //numberOfRings = "NONE";
-
+            Util.DriveAndShoot();
+            telemetry.addData("Right Position: " ,robot.frontRight.getCurrentPosition());
+            telemetry.addData("Left Position: ", robot.frontLeft.getCurrentPosition());
+            telemetry.update();
 
             if (numberOfRings == "NONE"){
-                //Drive to A, which puts you on the line
-                telemetry.addData("Right Position: " ,robot.frontRight.getCurrentPosition());
-                telemetry.addData("Left Position: ", robot.frontLeft.getCurrentPosition());
-                telemetry.update();
+                //Drive to A
 
-                //Util.turnLeft(5,.7);
-                Util.PIDloopDrive2(36, -.6);
+                //Position robot to drop wobble
+                Util.PIDloopDrive2(4, -.6);
                 sleep(500);
-                telemetry.addData("Right Position: " ,robot.frontRight.getCurrentPosition());
-                telemetry.addData("Left Position: ", robot.frontLeft.getCurrentPosition());
-                telemetry.update();
-
-                Util.turnLeft(1,.7);
+                Util.turnLeft(2,.7);
                 sleep(250);
 
-                break;
-                /*
-                Util.calculatePID(1.0);
-                sleep(500);
-                robot.feeder.setPower(1);
-                sleep(1500);
-                robot.feeder.setPower(0);
-                sleep(250);
-                Util.calculatePID(0);
-                sleep(100);
-                /*
-                Util.turnLeft(75,.5);
-                sleep(750);
+                //Drop the wobble
                 robot.wobbleRotate.setPosition(.65);
                 sleep(1250);
                 robot.grabber.setPosition(.6);
                 sleep(750);
-                Util.PIDloopDrive2(3,.7);
-                sleep(250);
-                Util.turnRight(90,.7);
+
+                //Drive forward, lift the grabber, and turn left onto the line
+                Util.PIDloopDrive2(2, -.6);
                 sleep(500);
-                Util.PIDloopDrive2(15,.7);
-                sleep(250);
                 robot.wobbleRotate.setPosition(0);
-                sleep(25000);*/
-            }
+                sleep(250);
+                Util.turnLeft(2,.7);
+                sleep(250);
+             }
 
             else if (numberOfRings == "SINGLE"){
                 //Drive to B
-                telemetry.addData("Right Position: " ,robot.frontRight.getCurrentPosition());
-                telemetry.addData("Left Position: ", robot.frontLeft.getCurrentPosition());
-                telemetry.update();
-
-                Util.PIDloopDrive2(75, .7);
+                //Drive right to straighten robot
+                Util.turnRight(1, .7);
                 sleep(250);
-                telemetry.addData("Right Position: " ,robot.frontRight.getCurrentPosition());
-                telemetry.addData("Left Position: ", robot.frontLeft.getCurrentPosition());
-                telemetry.update();
 
-                Util.turnRight(90,.7);
+                //Drive forward to square B and position the robot to drop wobble
+                Util.PIDloopDrive2(34, -.6);
                 sleep(500);
+                Util.turnLeft(2,.7);
+                sleep(250);
+                Util.PIDloopDrive2(3, -.6);
+                sleep(500);
+
+                //Drop the wobble
                 robot.wobbleRotate.setPosition(.65);
                 sleep(1250);
                 robot.grabber.setPosition(.6);
                 sleep(750);
-                Util.PIDloopDrive2(6, .7);
+
+                //Drive forward, lift the grabber, and turn left
+                Util.PIDloopDrive2(2, -.6);
                 sleep(500);
-                Util.turnLeft(30, .5);
-                sleep(750);
-                Util.PIDloopDrive2(-66, .5);
+                robot.wobbleRotate.setPosition(0);
                 sleep(250);
-                Util.MoveForwardInch(-7, .5);
-                robot.grabber.setPosition(0);
+                Util.turnLeft(5,.7);
+                sleep(250);
 
-
-
-            }
+                //Drive forward onto the line
+                Util.PIDloopDrive2(22, -.6);
+             }
 
             else {
-                //Drive to C
-                Util.MoveForwardInch(60, .5);
-                sleep(2000);
-                Util.MoveForwardInch(-44, .25);
+                //Drive to C  (QUAD)
+                //Drive right to straighten robot
+                Util.turnRight(1.75, .7);
+                sleep(250);
+
+                //Drive forward to square C and position the robot to drop wobble
+                Util.PIDloopDrive2(36, -.6);
+                sleep(500);
+                Util.turnLeft(4,.7);
+                sleep(250);
+                Util.PIDloopDrive2(3, -.6);
+                sleep(500);
+
+                //Drop the wobble
+                robot.wobbleRotate.setPosition(.65);
+                sleep(1250);
+                robot.grabber.setPosition(.6);
+                sleep(750);
+
+                //Drive forward, lift the grabber, and turn left
+                Util.PIDloopDrive2(2, -.6);
+                sleep(500);
+                robot.wobbleRotate.setPosition(0);
+                sleep(250);
+                Util.turnLeft(3,.7);
+                sleep(250);
+
+                //Drive forward onto the line
+                Util.PIDloopDrive2(24, -.6);
             }
-
-
 
             telemetry.addData("Left Motor Position at end", robot.frontLeft.getCurrentPosition());
             telemetry.addData("Right Motor Position at end", robot.frontRight.getCurrentPosition());
             telemetry.update();
 
-            sleep(5000);
+            sleep(20000);
 
 
         }

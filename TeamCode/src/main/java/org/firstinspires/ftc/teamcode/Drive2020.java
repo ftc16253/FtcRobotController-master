@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.util.Util;
 
 @TeleOp
 
@@ -97,59 +98,56 @@ public class Drive2020 extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            //double drive = gamepad1.left_stick_y;
-            //double turn = gamepad1.right_stick_x;
+            double drive = gamepad1.left_stick_y;
+            double turn = gamepad1.right_stick_x;
 
             // Drive forward or backward
-            /*if (drive == 1) {
-                frontLeft.setPower(.5);
-                frontRight.setPower(.5);
-                backRight.setPower(.5);
-                backLeft.setPower(.5);
-                telemetry.addData("status", "initilized");
-                telemetry.update();
-            } else if (drive == -1) {
-                frontRight.setPower(-.5);
-                frontLeft.setPower(-.5);
-                backRight.setPower(-.5);
-                backLeft.setPower(-.5);
-            } else {
+           if (drive != 0){
                 frontLeft.setPower(drive);
-                frontRight.setPower(drive);
-                backRight.setPower(drive);
+                frontRight.setPower(drive - .065);
+                backRight.setPower(drive - .065);
                 backLeft.setPower(drive);
             }
-*/
-            //Forward or backwards
-            frontLeft.setPower(gamepad1.left_stick_y);
-            frontRight.setPower(gamepad1.right_stick_y);
-            backRight.setPower(gamepad1.right_stick_y);
-            backLeft.setPower(gamepad1.left_stick_y);
+
+           if (turn != 0){
+               //Turn left or right
+               frontLeft.setPower(-turn);
+               frontRight.setPower(turn);
+               backLeft.setPower(-turn);
+               backRight.setPower(turn);
+           }
+
+           if (drive == 0 && turn == 0) {
+               frontLeft.setPower(0);
+               frontRight.setPower(0);
+               backRight.setPower(0);
+               backLeft.setPower(0);
+           }
 
             //Turn left or right
-            /*frontLeft.setPower(-turn);
-            frontRight.setPower(turn);
-            backLeft.setPower(-turn);
-            backRight.setPower(turn);*/
 
-            if (gamepad1.right_bumper == true) {
+            intake.setPower(gamepad2.left_stick_y);
+
+            if (gamepad2.a == true) {
                 //intake.setPower(1);
                 feeder.setPower(1);
-            }else{
+            } else if(gamepad2.b == true){
+                feeder.setPower(-1);
+            } else {
                 intake.setPower(0);
                 feeder.setPower(0);
             }
 
             //Right trigger - wobble rotator goes down
-            if (gamepad1.right_trigger != 0){
+            if (gamepad1.a == true){
                 telemetry.addData("status","right trigger pressed");
                 telemetry.update();
-                wobbleRotate.setPosition(.65);
+                wobbleRotate.setPosition(0);
             }
 
             //Left trigger - claw closes and wobble rotator goes up
-            if (gamepad1.left_trigger != 0) {
-                telemetry.addData("status", "left trigger pressed");
+            if (gamepad1.right_bumper == true) {
+                telemetry.addData("status", "Right Bumper pressed");
                 telemetry.update();
 
                 //Close claw first
@@ -157,6 +155,12 @@ public class Drive2020 extends LinearOpMode {
                 sleep(500);
                 //This is for the two servos
                 wobbleRotate.setPosition(.35);
+            }
+
+            if(gamepad1.b == true){
+                wobbleRotate.setPosition(.65);
+                sleep(250);
+                grabber.setPosition(.6);
             }
 
             //left bumper - wobble rotator goes down and claw opens
@@ -171,17 +175,15 @@ public class Drive2020 extends LinearOpMode {
                 wobbleRotate.setPosition(0);
             }*/
 
-            //Button X - turns on the shooter motors
-            if (gamepad1.x == true){
-                calculatePID(1.0);
+            if (gamepad2.left_trigger != 0) {
+                calculatePID(0);
                 sleep(100);
                 //shooterBack.setPower(1);
+            } else if (gamepad2.right_trigger != 0) {
+                    calculatePID(1.0);
+                    sleep(100);
+                    //shooterBack.setPower(1);
             }
-            else if (gamepad1.a) {
-                shooterFront.setPower(0);
-                //shooterBack.setPower(0);
-            }
-
 
 
             telemetry.addData("encoder: ", fEncoder);

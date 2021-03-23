@@ -45,11 +45,15 @@ class Functions2020 {
 
     public void turnLeft(double degrees, double power) {
 
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         double turnCircumference = 15 * 3.14;
         double totalRotations = turnCircumference / 360 * degrees;
@@ -81,36 +85,35 @@ class Functions2020 {
 
     public void turnRight(double degrees, double power) {
 
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        frontLeft.setTargetPosition((int) (-andyMarkEncoderTics / 360 * degrees));
-        frontRight.setTargetPosition((int) (-andyMarkEncoderTics / 360 * degrees));
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        double turnCircumference = 15 * 3.14;
+        double totalRotations = turnCircumference / 360 * degrees;
+        int rotationDistanceofWheel = (int) (andyMarkEncoderTics * totalRotations);
 
-        //frontRight.setTargetPosition(520);
-        //frontLeft.setTargetPosition(520);
-
-        frontLeft.setPower(-power);
-        frontRight.setPower(power);
-        backLeft.setPower(-power);
-        backRight.setPower(-power);
-
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        while (frontRight.isBusy() && frontLeft.isBusy()) { // || backLeft.isBusy() || backRight.isBusy()) {
-
+        boolean runRobot = true;
+        while (runRobot) {
+            if (Math.abs(frontRight.getCurrentPosition()) > Math.abs(rotationDistanceofWheel)) {
+                frontLeft.setPower(0);
+                backLeft.setPower(0);
+                frontRight.setPower(0);
+                backRight.setPower(0);
+                runRobot = false;
+            } else {
+                frontLeft.setPower(-power);
+                frontRight.setPower(power);
+                backLeft.setPower(-power);
+                backRight.setPower(power);
+            }
         }
-
-        frontLeft.setPower(0);
-        frontRight.setPower(0);
-        backRight.setPower(0);
-        backLeft.setPower(0);
-
 
     }
 
@@ -162,11 +165,19 @@ class Functions2020 {
 
     }
 
-    public void DriveA() {
-        //MoveForwardInch(93, .5);
-        MoveForwardInch(60, .5);
-        //MoveForwardInch(-60, 0.5);
-        //Let go of wobble grabber here
+    public void DriveAndShoot() {
+        PIDloopDrive2(38, -.6);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+
+        }
+        turnLeft(1.75,.7);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+
+        }
     }
 
     public void DriveB() {
@@ -222,14 +233,21 @@ class Functions2020 {
         while (Math.abs(frontRight.getCurrentPosition()) < TicDistance) {
             frontRight.setPower(power);
             frontLeft.setPower(power-0.05);
+            //frontLeft.setPower(power);
             backRight.setPower(power);
             backLeft.setPower(power-0.05);
+            //backLeft.setPower(power);
         }
 
         frontRight.setPower(0);
         frontLeft.setPower(0);
         backRight.setPower(0);
         backLeft.setPower(0);
+
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
     }
     public void calculatePID(double shooter_power) {
