@@ -76,10 +76,10 @@ public class PushBot2020
         }
 
         else{
-            grabber.setPosition(0);
             wobbleRotate.setPosition(.4);
             wobbleRotate.setPosition(.2);
             wobbleRotate.setPosition(0);
+            grabber.setPosition(0);
         }
 
 

@@ -166,18 +166,51 @@ class Functions2020 {
     }
 
     public void DriveAndShoot() {
-        PIDloopDrive2(38, -.6);
+        //PIDloopDrive2(38, -.6);
+        calculatePID(.95);
+        //PIDloopDrive2(20, -.6);
+        //PIDloopDrive2(1, -.6);
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
-
         }
-        turnLeft(1.75,.7);
+        //turnLeft(1.75,.7);
+        //turnRight(.25, .7);
+         try {
+            Thread.sleep(3500);
+        } catch (InterruptedException e) {
+        }
+        rob.feeder.setPower(1);
         try {
-            Thread.sleep(500);
+            Thread.sleep(600);
+        } catch (InterruptedException e) {
+        }
+        rob.feeder.setPower(0);
+        //calculatePID(.9);
+        try {
+            Thread.sleep(2500);
+        } catch (InterruptedException e) {
+        }
+        rob.feeder.setPower(1);
+        rob.intake.setPower(1);
+        try {
+            Thread.sleep(750);
+        } catch (InterruptedException e) {
+        }
+        rob.feeder.setPower(0);
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+        }
+        rob.feeder.setPower(1);
+        try {
+            Thread.sleep(4000);
         } catch (InterruptedException e) {
 
         }
+        calculatePID(0);
+        rob.feeder.setPower(0);
+        rob.intake.setPower(0);
     }
 
     public void DriveB() {
@@ -232,11 +265,11 @@ class Functions2020 {
 
         while (Math.abs(frontRight.getCurrentPosition()) < TicDistance) {
             frontRight.setPower(power);
-            frontLeft.setPower(power-0.05);
-            //frontLeft.setPower(power);
+            //frontLeft.setPower(power-0.05);
+            frontLeft.setPower(power);
             backRight.setPower(power);
-            backLeft.setPower(power-0.05);
-            //backLeft.setPower(power);
+            //backLeft.setPower(power-0.05);
+            backLeft.setPower(power);
         }
 
         frontRight.setPower(0);

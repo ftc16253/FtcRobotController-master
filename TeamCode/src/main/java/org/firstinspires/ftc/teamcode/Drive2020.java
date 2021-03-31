@@ -152,13 +152,13 @@ public class Drive2020 extends LinearOpMode {
 
                 //Close claw first
                 grabber.setPosition(0);
-                sleep(500);
+                sleep(250);
                 //This is for the two servos
                 wobbleRotate.setPosition(.35);
             }
 
             if(gamepad1.b == true){
-                wobbleRotate.setPosition(.65);
+                wobbleRotate.setPosition(.7);
                 sleep(250);
                 grabber.setPosition(.6);
             }
@@ -166,7 +166,7 @@ public class Drive2020 extends LinearOpMode {
             //left bumper - wobble rotator goes down and claw opens
             if (gamepad1.left_bumper == true){
                 wobbleRotate.setPosition(.55);
-                sleep(1000);
+                sleep(500);
                 grabber.setPosition(.6);
             }
 
@@ -183,6 +183,14 @@ public class Drive2020 extends LinearOpMode {
                     calculatePID(1.0);
                     sleep(100);
                     //shooterBack.setPower(1);
+            }
+
+            if (gamepad2.left_bumper == true){
+                calculatePID(0);
+                sleep(100);
+            }else if (gamepad2.right_bumper == true){
+                calculatePID(.9);
+                sleep(100);
             }
 
 
