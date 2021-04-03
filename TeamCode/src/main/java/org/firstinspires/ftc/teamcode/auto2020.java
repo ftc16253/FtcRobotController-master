@@ -50,13 +50,10 @@ public class auto2020 extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-
-
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             telemetry.addData("Status", "Running");
             telemetry.update();
-
 
             while (t<1) {
                 numberOfRings = detector.numberOfRings;
@@ -66,23 +63,15 @@ public class auto2020 extends LinearOpMode {
                 telemetry.addData("bottomTotal = ", bottomTotal);
                 telemetry.addData("topTotal = ", topTotal);
                 telemetry.update();
-
                 t=t+1;
             }
-            //numberOfRings = "NONE";
+
             Util.DriveAndShoot();
-            telemetry.addData("Right Position: " ,robot.frontRight.getCurrentPosition());
-            telemetry.addData("Left Position: ", robot.frontLeft.getCurrentPosition());
-            telemetry.update();
             sleep(1000);
 
             if (numberOfRings == "NONE"){
                 //Drive to A
-
-                //Position robot to drop wobble
-                Util.turnLeft(.40, .7);
-                //Util.PIDloopDrive2(4, -.6);
-                Util.PIDloopDrive2(45, -.6);
+                Util.PIDloopDrive2(46, -.6);
                 sleep(500);
                 Util.turnLeft(3.5,.7);
                 sleep(250);
@@ -104,14 +93,7 @@ public class auto2020 extends LinearOpMode {
              }
 
             else if (numberOfRings == "SINGLE") {
-                //Drive to B
-                //Drive right to straighten robot
-                //Util.turnRight(1, .7);
-                Util.turnLeft(.40, .7);
-                sleep(250);
-
                 //Drive forward to square B and position the robot to drop wobble
-                //Util.PIDloopDrive2(34, -.6);
                 Util.PIDloopDrive2(70, -.6);
                 sleep(500);
                 Util.turnRight(2, .7);
@@ -135,26 +117,14 @@ public class auto2020 extends LinearOpMode {
 
                 //Drive forward onto the line
                 Util.PIDloopDrive2(22, -.6);
-                //sleep(250);
-                //Util.turnLeft(5,.7);
-                //sleep(250);
-                //Util.PIDloopDrive2(12, -.6);           }
-            }
+             }
             else {
-                //Drive to C  (QUAD)
-                //Drive right to straighten robot
-                //Util.turnRight(1.75, .7);
-                Util.turnLeft(.40, .7);
-                sleep(250);
-
                 //Drive forward to square C and position the robot to drop wobble
                 //Util.PIDloopDrive2(36, -.6);
                 Util.PIDloopDrive2(75, -.6);
                 sleep(500);
-                Util.turnLeft(5,.7);
+                Util.turnLeft(5.5,.7);
                 sleep(250);
-                //Util.PIDloopDrive2(3, -.6);
-                //sleep(500);
 
                 //Drop the wobble
                 robot.wobbleRotate.setPosition(.65);
@@ -174,13 +144,13 @@ public class auto2020 extends LinearOpMode {
                 Util.PIDloopDrive2(20, -.6);
             }
 
+            robot.wobbleRotate.setPosition(.65);
+
             telemetry.addData("Left Motor Position at end", robot.frontLeft.getCurrentPosition());
             telemetry.addData("Right Motor Position at end", robot.frontRight.getCurrentPosition());
             telemetry.update();
 
             sleep(30000);
-
-
         }
     }
 }

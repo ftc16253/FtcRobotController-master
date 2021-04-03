@@ -166,8 +166,8 @@ class Functions2020 {
     }
 
     public void DriveAndShoot() {
+        calculatePID(.93);
         //PIDloopDrive2(38, -.6);
-        calculatePID(.95);
         //PIDloopDrive2(20, -.6);
         //PIDloopDrive2(1, -.6);
         try {
@@ -176,7 +176,8 @@ class Functions2020 {
         }
         //turnLeft(1.75,.7);
         //turnRight(.25, .7);
-         try {
+        //calculatePID(1);
+        try {
             Thread.sleep(3500);
         } catch (InterruptedException e) {
         }
@@ -211,6 +212,7 @@ class Functions2020 {
         calculatePID(0);
         rob.feeder.setPower(0);
         rob.intake.setPower(0);
+        turnLeft(.35, .7);
     }
 
     public void DriveB() {

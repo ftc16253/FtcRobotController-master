@@ -12,9 +12,7 @@ public class RingDetector extends OpenCvPipeline {
     public String numberOfRings = "NONE";
     public double bottomTotal;
     public double topTotal;
-    public RingDetector(){
-
-    }
+    public RingDetector(){ }
 
     public final  Mat processFrame(Mat input){
         input.copyTo(workingMatrix);
@@ -22,13 +20,6 @@ public class RingDetector extends OpenCvPipeline {
             return input;
         }
         Imgproc.cvtColor(workingMatrix, workingMatrix, Imgproc.COLOR_RGB2YCrCb);
-
-        /*Mat matCenter = workingMatrix.submat(120, 150, 80, 120);
-        Imgproc.rectangle(workingMatrix, new Rect(80,120, 80, 120), new Scalar(0,255,0));
-        totalRings = Core.sumElems(matCenter).val[2];*/
-
-        //Mat matBottom = workingMatrix.submat(120,130,10, 50);
-        //Mat matTop = workingMatrix.submat(100, 110, 10, 50);
         Mat matBottom = workingMatrix.submat(120,130,120, 160);
         Mat matTop = workingMatrix.submat(100, 110, 120, 160);
 
@@ -47,8 +38,6 @@ public class RingDetector extends OpenCvPipeline {
         } else {
             numberOfRings = "NONE";
         }
-
         return workingMatrix;
     }
-
 }
