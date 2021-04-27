@@ -54,7 +54,7 @@ public class autoIMU extends LinearOpMode {
         webcam.openCameraDevice();
         webcam.setPipeline(detector);
         webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
-        robot.grabber.setPosition(0);
+        robot.grabberSetPosition(0);
 
         // make sure the imu gyro is calibrated before continuing.
         while (!isStopRequested() && !imu.isGyroCalibrated())
@@ -143,7 +143,7 @@ public class autoIMU extends LinearOpMode {
                 sleep(500);
                 robot.wobbleRotate.setPosition(.65);
                 sleep(1250);
-                robot.grabber.setPosition(.6);
+                robot.grabberSetPosition(.6);
                 sleep(750);
                 Util.PIDloopDrive2(6, .7);
                 sleep(500);
@@ -152,7 +152,7 @@ public class autoIMU extends LinearOpMode {
                 Util.PIDloopDrive2(-66, .5);
                 sleep(250);
                 Util.MoveForwardInch(-7, .5);
-                robot.grabber.setPosition(0);
+                robot.grabberSetPosition(0);
 
 
 

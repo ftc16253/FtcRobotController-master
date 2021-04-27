@@ -39,21 +39,21 @@ class Functions2020 {
 
         frontLeft = rob.frontLeft;
         frontRight = rob.frontRight;
-        backLeft = rob.backLeft;
-        backRight = rob.backRight;
+        //backLeft = rob.backLeft;
+        //backRight = rob.backRight;
     }
 
     public void turnLeft(double degrees, double power) {
 
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         double turnCircumference = 15 * 3.14;
         double totalRotations = turnCircumference / 360 * degrees;
@@ -68,15 +68,15 @@ class Functions2020 {
         while (runRobot) {
             if (Math.abs(frontRight.getCurrentPosition()) > Math.abs(rotationDistanceofWheel)) {
                 frontLeft.setPower(0);
-                backLeft.setPower(0);
+                //backLeft.setPower(0);
                 frontRight.setPower(0);
-                backRight.setPower(0);
+                //backRight.setPower(0);
                 runRobot = false;
             } else {
                 frontLeft.setPower(power);
                 frontRight.setPower(-power);
-                backLeft.setPower(power);
-                backRight.setPower(-power);
+                //backLeft.setPower(power);
+                //backRight.setPower(-power);
             }
         }
 
@@ -87,13 +87,13 @@ class Functions2020 {
 
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         double turnCircumference = 15 * 3.14;
         double totalRotations = turnCircumference / 360 * degrees;
@@ -103,16 +103,16 @@ class Functions2020 {
         while (runRobot) {
             if (Math.abs(frontRight.getCurrentPosition()) > Math.abs(rotationDistanceofWheel)) {
                 frontLeft.setPower(0);
-                backLeft.setPower(0);
+                //backLeft.setPower(0);
                 frontRight.setPower(0);
-                backRight.setPower(0);
+                //backRight.setPower(0);
                 runRobot = false;
             } else {
                 frontLeft.setPower(-power);
                 frontRight.setPower(power);
-                backLeft.setPower(-power);
-                backRight.setPower(power);
-            }
+                //backLeft.setPower(-power);
+                //backRight.setPower(power);
+             }
         }
 
     }
@@ -166,19 +166,34 @@ class Functions2020 {
     }
 
     public void DriveAndShoot() {
-        calculatePID(.93);
-        //PIDloopDrive2(38, -.6);
+        calculatePID(1);
+        PIDloopDrive2(28, -.5);
         //PIDloopDrive2(20, -.6);
         //PIDloopDrive2(1, -.6);
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
         }
+
+        frontLeft.setPower(-0.2);
+        try {
+            Thread.sleep(530);
+        } catch (InterruptedException e) {
+        }
+        frontLeft.setPower(0);
+
+        //turnRight(0.1,.3);
+        //turnLeft(.141,-.7);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+        }
+        frontRight.setPower(0);
         //turnLeft(1.75,.7);
-        //turnRight(.25, .7);
+        //turnRight(.25, .2);
         //calculatePID(1);
         try {
-            Thread.sleep(3500);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
         }
         rob.feeder.setPower(1);
@@ -189,7 +204,7 @@ class Functions2020 {
         rob.feeder.setPower(0);
         //calculatePID(.9);
         try {
-            Thread.sleep(2500);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
         }
         rob.feeder.setPower(1);
@@ -205,7 +220,7 @@ class Functions2020 {
         }
         rob.feeder.setPower(1);
         try {
-            Thread.sleep(4000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
 
         }
@@ -230,21 +245,21 @@ class Functions2020 {
                     while (frontRight.getCurrentPosition() != frontLeft.getCurrentPosition()) {
                         frontRight.setPower(power - .05);
                         frontLeft.setPower(power);
-                        backRight.setPower(power - .05);
-                        backLeft.setPower(power);
+                        //backRight.setPower(power - .05);
+                        //backLeft.setPower(power);
                     }
                 } else if (frontRight.getCurrentPosition() + 3 < frontLeft.getCurrentPosition()) {
                     while (frontRight.getCurrentPosition() != frontLeft.getCurrentPosition()) {
                         frontRight.setPower(power);
                         frontLeft.setPower(power - .05);
-                        backRight.setPower(power);
-                        backLeft.setPower(power - .05);
+                        //backRight.setPower(power);
+                        //backLeft.setPower(power - .05);
                     }
                 } else {
                     frontRight.setPower(power);
                     frontLeft.setPower(power);
-                    backRight.setPower(power);
-                    backLeft.setPower(power);
+                    //backRight.setPower(power);
+                    //backLeft.setPower(power);
                 }
             }
         }
@@ -253,38 +268,34 @@ class Functions2020 {
     public void PIDloopDrive2(double distance, double power) {
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         double totalRotations = distance / circumference;
         int TicDistance = (int) (andyMarkEncoderTics * totalRotations);
 
-
         while (Math.abs(frontRight.getCurrentPosition()) < TicDistance) {
-            frontRight.setPower(power);
+            frontRight.setPower(power+.0175);
             //frontLeft.setPower(power-0.05);
             frontLeft.setPower(power);
-            backRight.setPower(power);
+            //backRight.setPower(power);
             //backLeft.setPower(power-0.05);
-            backLeft.setPower(power);
+            //backLeft.setPower(power);
         }
 
         frontRight.setPower(0);
         frontLeft.setPower(0);
-        backRight.setPower(0);
-        backLeft.setPower(0);
-
-        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+        //backRight.setPower(0);
+        //backLeft.setPower(0);
+        //backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
+
     public void calculatePID(double shooter_power) {
         fVelocityTime = System.nanoTime();
         fEncoder = rob.shooterFront.getCurrentPosition();
@@ -308,7 +319,7 @@ class Functions2020 {
 
         motorOut = (kP * fError) + (kI * integral) + (kD * derivative);
 
-        motorOut = Range.clip(motorOut, 0.0, shooter_power);
+        motorOut = Range.clip(motorOut, shooter_power-.1, shooter_power);
 
         //Log.wtf(TAG, String.valueOf(fError));
 

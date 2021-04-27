@@ -68,7 +68,7 @@ public class Drive2020 extends LinearOpMode {
 
         motorOut = (kP * fError) + (kI * integral) + (kD * derivative);
 
-        motorOut = Range.clip(motorOut, 0.0, shooter_power);
+        motorOut = Range.clip(motorOut, shooter_power-.1, shooter_power);
 
         //Log.wtf(TAG, String.valueOf(fError));
 
@@ -88,7 +88,6 @@ public class Drive2020 extends LinearOpMode {
         backRight = robot.backRight;
         intake = robot.intake;
         feeder = robot.feeder;
-        grabber = robot.grabber;
         wobbleRotate = robot.wobbleRotate;
         shooterFront = robot.shooterFront;
         ///shooterBack = robot.shooterBack;
@@ -103,25 +102,25 @@ public class Drive2020 extends LinearOpMode {
 
             // Drive forward or backward
            if (drive != 0){
-                frontLeft.setPower(drive);
-                frontRight.setPower(drive - .065);
-                backRight.setPower(drive - .065);
-                backLeft.setPower(drive);
+                frontLeft.setPower(drive-.05);
+                frontRight.setPower(drive - .115);
+                //backRight.setPower(drive - .115);
+                //backLeft.setPower(drive-.05);
             }
 
            if (turn != 0){
                //Turn left or right
                frontLeft.setPower(-turn);
                frontRight.setPower(turn);
-               backLeft.setPower(-turn);
-               backRight.setPower(turn);
+               //backLeft.setPower(-turn);
+               //backRight.setPower(turn);
            }
 
            if (drive == 0 && turn == 0) {
                frontLeft.setPower(0);
                frontRight.setPower(0);
-               backRight.setPower(0);
-               backLeft.setPower(0);
+               //backRight.setPower(0);
+               //backLeft.setPower(0);
            }
 
             //Turn left or right
@@ -134,7 +133,7 @@ public class Drive2020 extends LinearOpMode {
             } else if(gamepad2.b == true){
                 feeder.setPower(-1);
             } else {
-                intake.setPower(0);
+                //intake.setPower(0);
                 feeder.setPower(0);
             }
 
@@ -149,28 +148,29 @@ public class Drive2020 extends LinearOpMode {
             if (gamepad1.right_bumper == true) {
                 telemetry.addData("status", "Right Bumper pressed");
                 telemetry.update();
-
                 //Close claw first
-                grabber.setPosition(0);
-                sleep(250);
+                robot.grabberSetPosition(0);
+                sleep(750);
                 //This is for the two servos
-                wobbleRotate.setPosition(.35);
-            }
-
-            if(gamepad1.b == true){
-                wobbleRotate.setPosition(.7);
-                sleep(250);
-                grabber.setPosition(.6);
+                wobbleRotate.setPosition(.25);
             }
 
             //left bumper - wobble rotator goes down and claw opens
             if (gamepad1.left_bumper == true){
+                //Move two servos down
                 wobbleRotate.setPosition(.55);
                 sleep(500);
-                grabber.setPosition(.6);
+                //Open claw
+                robot.grabberSetPosition(.6);
             }
 
-            //Button A - wobble arm to initial position
+            if(gamepad1.b == true){
+                wobbleRotate.setPosition(.75);
+                sleep(250);
+                robot.grabberSetPosition(.6);
+            }
+
+             //Button A - wobble arm to initial position
             /*if (gamepad1.a == true){
                 wobbleRotate.setPosition(0);
             }*/
@@ -180,7 +180,7 @@ public class Drive2020 extends LinearOpMode {
                 sleep(100);
                 //shooterBack.setPower(1);
             } else if (gamepad2.right_trigger != 0) {
-                    calculatePID(1.0);
+                    calculatePID(.95);
                     sleep(100);
                     //shooterBack.setPower(1);
             }
@@ -189,7 +189,7 @@ public class Drive2020 extends LinearOpMode {
                 calculatePID(0);
                 sleep(100);
             }else if (gamepad2.right_bumper == true){
-                calculatePID(.9);
+                calculatePID(.8);
                 sleep(100);
             }
 

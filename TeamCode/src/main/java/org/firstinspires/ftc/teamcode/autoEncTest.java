@@ -21,7 +21,7 @@ public class autoEncTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         //Initialize motors
-        robot.init(hardwareMap,true);
+        robot.init(hardwareMap, true);
         Util.init(hardwareMap);
         runtime.reset();
         int rotationDistanceofWheel = 3772;
@@ -38,28 +38,41 @@ public class autoEncTest extends LinearOpMode {
             telemetry.addData("Status", "Running");
             telemetry.update();
 
-           //telemetry.addData("Motor Position: ", robot.frontLeft.getCurrentPosition());
-           //telemetry.update();
-           sleep(1000);
+            //telemetry.addData("Motor Position: ", robot.frontLeft.getCurrentPosition());
+            //telemetry.update();
+            sleep(1000);
 
-           robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-           robot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             robot.frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             robot.frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-           robot.frontLeft.setPower(power);
-           robot.frontRight.setPower(power);
-           robot.backRight.setPower(power);
-           robot.backLeft.setPower(power);
-           while (Math.abs(robot.frontLeft.getCurrentPosition()) < Math.abs(rotationDistanceofWheel) || Math.abs(robot.frontRight.getCurrentPosition()) < Math.abs(rotationDistanceofWheel)) {
-               telemetry.addData("rotationDistance: ", rotationDistanceofWheel);
-               telemetry.addData("Motor Position: ", robot.frontLeft.getCurrentPosition());
-               telemetry.update();
-           }
+            robot.encoderTest.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.encoderTest.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+           /* robot.frontLeft.setPower(power);
+            robot.frontRight.setPower(power);
+            robot.backRight.setPower(power);
+            robot.backLeft.setPower(power);*/
+            double t = 1;
+           /* while (Math.abs(robot.frontLeft.getCurrentPosition()) < Math.abs(rotationDistanceofWheel) || Math.abs(robot.frontRight.getCurrentPosition()) < Math.abs(rotationDistanceofWheel)) {
+                telemetry.addData("rotationDistance: ", rotationDistanceofWheel);
+                telemetry.addData("Motor Position: ", robot.frontLeft.getCurrentPosition());
+                telemetry.update();
+            }*/
             robot.frontLeft.setPower(0);
             robot.frontRight.setPower(0);
             robot.backLeft.setPower(0);
             robot.backRight.setPower(0);
 
+            while (t < 5) {
+                robot.shooterFront.setPower(1-.5/t);
+                sleep(1000);
+                robot.shooterFront.setPower(0);
+
+                telemetry.addData("Encoder Position", robot.shooterFront.getCurrentPosition());
+                telemetry.addData("time ", 1000 * t);
+                telemetry.update();
+                t += 1;
+            }
 
             telemetry.addData("Left Motor Position at end", robot.frontLeft.getCurrentPosition());
             telemetry.addData("Right Motor Position at end", robot.frontRight.getCurrentPosition());
